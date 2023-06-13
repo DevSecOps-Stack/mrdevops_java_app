@@ -7,7 +7,7 @@ pipeline{
     }
     stages{
         stage('Git Checkout'){
-        when {expression{parm.action == 'create'}}
+        when {expression{parms.action == 'create'}}
             steps{
             gitCheckout(
                 branch: "main",
@@ -16,7 +16,7 @@ pipeline{
             }
         }
         stage('Unit Test maven'){
-        when{expression{parm.action == 'create'}}
+        when{expression{parms.action == 'create'}}
             steps{
                script{
                    mvnTest()
@@ -24,7 +24,7 @@ pipeline{
             }
         }
         stage('Integration Test maven'){
-        when {expression{parm.action == 'create'}}
+        when {expression{parms.action == 'create'}}
             steps{
                script{
                    mvnIntegrationTest()
@@ -32,7 +32,7 @@ pipeline{
             }
         }
         stage('Static code analysis: sonarqube'){
-        when {expression{parm.action == 'create'}}
+        when {expression{parms.action == 'create'}}
             steps{
                script{
                    statiCodeAnalysis()
