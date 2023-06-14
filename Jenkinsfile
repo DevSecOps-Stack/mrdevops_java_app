@@ -31,14 +31,15 @@ pipeline{
                }
             }
         }
-        stage('Static code analysis: sonarqube'){
-        when {expression{params.action == 'create'}}
+        stage('Static code analysis: Sonarqube'){
+         when { expression {  params.action == 'create' } }
             steps{
                script{
+                   
                    def SonarQubecredentialsId = 'sonarqube-api'
                    statiCodeAnalysis(SonarQubecredentialsId)
                }
             }
-        }       
+        }     
     }
 }
