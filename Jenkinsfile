@@ -72,15 +72,23 @@ pipeline{
                }
             }
         }
-        stage('Docker Image Build'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
-                   
-                   dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+ 
+        stage('Docker Image Build') {
+              when { 
+                   expression { params.action == 'create' } 
                }
-            }
-        }
+                agent {
+                    docker {
+                        image 'docker:dind'
+                        args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    }
+                 }
+                    steps {
+                        script {
+                            dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+                        }
+                    }
+                }
          stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
