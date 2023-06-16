@@ -72,8 +72,6 @@ pipeline{
                }
             }
         }
- 
-    stages {
         stage('Docker Image Build') {
             when { 
                 expression { params.action == 'create' } 
@@ -89,7 +87,6 @@ pipeline{
                 }
             }
         }
-    }
    stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
