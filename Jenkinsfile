@@ -72,21 +72,22 @@ pipeline{
                }
             }
         }
-        stage('Docker Image Build') {
-            when { 
-                expression { params.action == 'create' } 
-            }
-            agent {
-                docker {
-                    image 'docker:dind'
-                }
-            }
-            steps {
-                script {
+    stage('Docker Image Build') {
+
+        environment {
+            DOCKER_HOST = 'tcp://docker-dind:2376'
+        }
+        when { 
+            expression { params.action == 'create' } 
+        }
+        steps {
+            script {
+                docker.image('docker:dind'){
                     dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
                 }
             }
         }
+    }
    stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
