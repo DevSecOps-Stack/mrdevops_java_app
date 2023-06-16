@@ -73,23 +73,23 @@ pipeline{
             }
         }
  
-stage('Docker Image Build') {
-    agent any  // Using any available agent
-    environment {
-        DOCKER_HOST = 'tcp://docker-dind:2376'
-    }
-    when { 
-        expression { params.action == 'create' } 
-    }
-    steps {
-        script {
-            docker.image('docker:dind').inside('-v /var/run/docker.sock:/var/run/docker.sock') {
-                dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+    stages {
+        stage('Docker Image Build') {
+            when { 
+                expression { params.action == 'create' } 
+            }
+            agent {
+                docker {
+                    image 'docker:dind'
+                }
+            }
+            steps {
+                script {
+                    dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+                }
             }
         }
     }
-}
-
    stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
