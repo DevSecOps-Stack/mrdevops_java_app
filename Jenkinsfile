@@ -73,7 +73,7 @@ pipeline{
             }
         }
     stage('Docker Image Build') {
-
+        agent any  // Using any available agent
         environment {
             DOCKER_HOST = 'tcp://docker-dind:2376'
         }
@@ -87,7 +87,7 @@ pipeline{
                 }
             }
         }
-    }
+}
    stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
