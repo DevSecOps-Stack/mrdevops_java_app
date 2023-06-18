@@ -101,14 +101,14 @@ pipeline{
                }
             }
         }   
-        //stage('Docker Image Cleanup : DockerHub '){
-        // when { expression {  params.action == 'create' } }
-        //    steps{
-         //      script{
+        stage('Docker Image Cleanup : DockerHub '){
+        when { expression {  params.action == 'create' } }
+         steps{
+          script{
                    
-           //        dockerImageCleanup("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-            //   }
-           // }
-       // }      
+             dockerImagePush("${params.appname}","${params.acrurl}","${params.ImageTag}")
+            }
+           }
+       }      
     }
 }
