@@ -9,7 +9,7 @@ pipeline{
     parameters{
 
         choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
-        string(name: 'acrurl', description: "name of the docker build", defaultValue: 'javapp')
+        string(name: 'acrurl', description: "name of the docker build", defaultValue: 'javaappacr.azurecr.io')
         string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
     }
 
@@ -96,7 +96,7 @@ pipeline{
             steps{
                script{
                    
-                   dockerImagePush("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+                   dockerImagePush("${params.acrurl}","${params.ImageTag}")
                }
             }
         }   
