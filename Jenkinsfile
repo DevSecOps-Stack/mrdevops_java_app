@@ -9,6 +9,7 @@ pipeline{
     parameters{
 
         choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
+        string(name: 'appname', description: "name of the docker app", defaultValue: 'javaapp')
         string(name: 'acrurl', description: "name of the docker build", defaultValue: 'javaappacr.azurecr.io')
         string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
     }
@@ -78,7 +79,7 @@ pipeline{
             steps{
                script{
                    
-                   dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+                   dockerBuild("${params.appname}","${params.acrurl}","${params.ImageTag}")
                }
             }
         }
@@ -87,7 +88,7 @@ pipeline{
             steps{
                script{
                    
-                   dockerImageScan("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
+                   dockerImageScan("${params.appname}","${params.acrurl}","${params.ImageTag}")
                }
             }
         }
@@ -96,7 +97,7 @@ pipeline{
             steps{
                script{
                    
-                   dockerImagePush("${params.acrurl}","${params.ImageTag}")
+                   dockerImageScan("${params.appname}","${params.acrurl}","${params.ImageTag}")
                }
             }
         }   
