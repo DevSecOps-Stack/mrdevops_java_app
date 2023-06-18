@@ -2,9 +2,10 @@
 
 pipeline{
 
-   agent {
-        label 'java_node' // All stages will run on the agent with label 'my-agent'
-    }
+   agent any
+  // agent {
+  //      label 'java_node' // All stages will run on the agent with label 'my-agent'
+  //  }
     parameters{
 
         choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
