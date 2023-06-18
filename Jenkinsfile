@@ -97,7 +97,7 @@ pipeline{
             steps{
                script{
                    
-                   dockerImageScan("${params.appname}","${params.acrurl}","${params.ImageTag}")
+                   dockerImagePush("${params.appname}","${params.acrurl}","${params.ImageTag}")
                }
             }
         }   
