@@ -6,6 +6,7 @@ pipeline{
   // agent {
   //      label 'java_node' // All stages will run on the agent with label 'my-agent'
    // test
+   //test
   //  }
     parameters{
 
