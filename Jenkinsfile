@@ -48,7 +48,7 @@ pipeline{
             }
         }
         stage('Static code analysis: Sonarqube'){
-         when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'delete' } }
             steps{
                script{
                    
@@ -58,7 +58,7 @@ pipeline{
             }
         }
         stage('Quality Gate Status Check : Sonarqube'){
-         when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'delete' } }
             steps{
                script{
                    
@@ -77,7 +77,7 @@ pipeline{
             }
         }
         stage('Docker Image Build'){
-         when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'delete' } }
             steps{
                script{
                    
@@ -86,7 +86,7 @@ pipeline{
             }
         }
          stage('Docker Image Scan: trivy '){
-         when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'delete' } }
             steps{
                script{
                    
@@ -95,7 +95,7 @@ pipeline{
             }
         }
         stage('Docker Image Push : DockerHub '){
-         when { expression {  params.action == 'create' } }
+         when { expression {  params.action == 'delete' } }
             steps{
                script{
                    
@@ -104,7 +104,7 @@ pipeline{
             }
         }   
         stage('Docker Image Cleanup : DockerHub '){
-        when { expression {  params.action == 'create' } }
+        when { expression {  params.action == 'delete' } }
          steps{
           script{
                    
